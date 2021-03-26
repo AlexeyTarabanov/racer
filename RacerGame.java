@@ -50,4 +50,14 @@ public class RacerGame extends Game {
             }
         }
     }
+
+    // для того, чтобы избежать исключений вызова метода с координатами, лежащими за пределами игрового поля
+    // переопределил метод
+    // теперь он будет вызываться только в случае, если координаты находятся внутри игрового поля
+    @Override
+    public void setCellColor(int x, int y, Color color) {
+        if (x < WIDTH && x >= 0 && y < HEIGHT && y >= 0) {
+            super.setCellColor(x, y, color);
+        }
+    }
 }
