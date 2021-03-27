@@ -36,6 +36,7 @@ public class RacerGame extends Game {
         roadMarking = new RoadMarking();
         player = new PlayerCar();
         drawScene();
+        setTurnTimer(40);
     }
 
     // отрисовка всех игровых объектов
@@ -69,5 +70,16 @@ public class RacerGame extends Game {
         if (x < WIDTH && x >= 0 && y < HEIGHT && y >= 0) {
             super.setCellColor(x, y, color);
         }
+    }
+    // перемещает все подвижные игровые объекты
+    private void moveAll() {
+        roadMarking.move(player.speed);
+    }
+
+    // все, что будет происходить на каждом шаге, выполняется в этом методе
+    @Override
+    public void onTurn(int step) {
+        moveAll();
+        drawScene();
     }
 }
