@@ -30,8 +30,8 @@ public class GameObject {
     // рисует объект
     public void draw(Game game) {
         // устанавливает цвет ячейки
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
                 // цвет
                 int colorIndex = matrix[i][j];
                 game.setCellColor(x + j, y + i, Color.values()[colorIndex]);

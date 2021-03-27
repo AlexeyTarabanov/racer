@@ -71,9 +71,11 @@ public class RacerGame extends Game {
             super.setCellColor(x, y, color);
         }
     }
+
     // перемещает все подвижные игровые объекты
     private void moveAll() {
         roadMarking.move(player.speed);
+        player.move();
     }
 
     // все, что будет происходить на каждом шаге, выполняется в этом методе
@@ -81,5 +83,16 @@ public class RacerGame extends Game {
     public void onTurn(int step) {
         moveAll();
         drawScene();
+    }
+
+    // обрабатывает нажатие клавиш
+    @Override
+    public void onKeyPress(Key key) {
+        if (key == Key.RIGHT) {
+            player.setDirection(Direction.RIGHT);
+        }
+        if (key == Key.LEFT) {
+            player.setDirection(Direction.LEFT);
+        }
     }
 }
