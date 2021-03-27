@@ -2,7 +2,9 @@ package com.javarush.games.racer;
 
 import com.javarush.engine.cell.*;
 
-/** Будет представлять игровые объекты. */
+/**
+ * Будет представлять игровые объекты.
+ */
 public class GameObject {
 
     // координаты верхнего левого угла объекта на игровом поле

@@ -2,7 +2,9 @@ package com.javarush.games.racer;
 
 import com.javarush.engine.cell.*;
 
-/** Главный класс.*/
+/**
+ * Главный класс.
+ */
 public class RacerGame extends Game {
 
     // ширина
@@ -13,6 +15,8 @@ public class RacerGame extends Game {
     public static final int CENTER_X = WIDTH / 2;
     // обочина
     public static final int ROADSIDE_WIDTH = 14;
+    // дорожная разметка
+    private RoadMarking roadMarking;
 
     // установка начального состояния игры (точка входа)
     @Override
@@ -27,12 +31,14 @@ public class RacerGame extends Game {
     // для старта новой игры
     // здесь будем создавать все эл-ты игры
     private void createGame() {
+        roadMarking = new RoadMarking();
         drawScene();
     }
 
     // отрисовка всех игровых объектов
     private void drawScene() {
         drawField();
+        roadMarking.draw(this);
     }
 
     // отрисовка фона игрового поля
