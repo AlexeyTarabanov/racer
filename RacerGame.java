@@ -95,4 +95,16 @@ public class RacerGame extends Game {
             player.setDirection(Direction.LEFT);
         }
     }
+
+    // поведение машины при отпускании клавиш
+    @Override
+    public void onKeyReleased(Key key) {
+        if (key == Key.RIGHT && player.getDirection() == Direction.RIGHT) {
+            player.setDirection(Direction.NONE);
+        }
+        if (key == Key.LEFT && player.getDirection() == Direction.LEFT) {
+            player.setDirection(Direction.NONE);
+        }
+    }
 }
+

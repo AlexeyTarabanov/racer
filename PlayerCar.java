@@ -1,5 +1,7 @@
 package com.javarush.games.racer;
 
+import com.javarush.games.racer.road.RoadManager;
+
 /**
  * Машина игрока.
  */
@@ -26,12 +28,16 @@ public class PlayerCar extends GameObject {
 
     // в зависимости от направления движения будет менять координаты машины по горизонтали
     public void move() {
+        if (x < RoadManager.LEFT_BORDER) {
+            x = RoadManager.LEFT_BORDER;
+        } else if (x > RoadManager.RIGHT_BORDER - width) {
+            x = RoadManager.RIGHT_BORDER - width;
+        }
 
         if (direction == Direction.LEFT) {
-            x -= 1;
-        }
-        if (direction == Direction.RIGHT) {
-            x += 1;
+            x--;
+        } else if (direction == Direction.RIGHT) {
+            x++;
         }
     }
 }
