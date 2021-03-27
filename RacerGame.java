@@ -17,6 +17,8 @@ public class RacerGame extends Game {
     public static final int ROADSIDE_WIDTH = 14;
     // дорожная разметка
     private RoadMarking roadMarking;
+    // машина игрока
+    private PlayerCar player;
 
     // установка начального состояния игры (точка входа)
     @Override
@@ -32,6 +34,7 @@ public class RacerGame extends Game {
     // здесь будем создавать все эл-ты игры
     private void createGame() {
         roadMarking = new RoadMarking();
+        player = new PlayerCar();
         drawScene();
     }
 
@@ -39,6 +42,7 @@ public class RacerGame extends Game {
     private void drawScene() {
         drawField();
         roadMarking.draw(this);
+        player.draw(this);
     }
 
     // отрисовка фона игрового поля
