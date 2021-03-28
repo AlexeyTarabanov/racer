@@ -58,6 +58,9 @@ public class RoadManager {
         for (RoadObject roadObject : items) {
             roadObject.move(boost + roadObject.speed);
         }
+        // Чтобы генерировались новые шипы,
+        // старые нужно удалять из списка items после того, как они вышли за пределы экрана.
+        deletePassedItems();
     }
 
     // проверяет существует ли Thorn
@@ -83,5 +86,12 @@ public class RoadManager {
     public void generateNewRoadObjects(Game game) {
         // создаем шипы
         generateThorn(game);
+    }
+
+    // удаляет вставленные элементы, если они вышли за края игрового поля
+    // (за пределы экрана)
+    private void deletePassedItems() {
+        // удаляем если у объекта-препятствия координата y больше либо равна RacerGame.HEIGHT
+        items.removeIf(item -> item.y >= RacerGame.HEIGHT);
     }
 }
