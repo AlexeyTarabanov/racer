@@ -40,4 +40,9 @@ public class PlayerCar extends GameObject {
             x++;
         }
     }
+
+    // меняем визуализацию машины
+    public void stop() {
+        matrix = ShapeMatrix.PLAYER_DEAD;
+    }
 }
