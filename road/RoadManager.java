@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Класс будет отвечать за регулировку дорожного движения.
+ * Управляет всеми препятствиями на дороге.
  */
 public class RoadManager {
 
@@ -20,6 +21,7 @@ public class RoadManager {
     private static final int FOURTH_LANE_POSITION = 44;
     // список всех текущих объектов-препятствий
     private List<RoadObject> items = new ArrayList<>();
+
 
     // создание объектов-препятствий
     private RoadObject createRoadObject(RoadObjectType type, int x, int y) {
@@ -41,6 +43,20 @@ public class RoadManager {
         // добавляет в список текущих объектов-препятствий
         if (roadObject != null) {
             items.add(roadObject);
+        }
+    }
+
+    // отрисовка препятствий
+    public void draw(Game game) {
+        for (RoadObject roadObject : items) {
+            roadObject.draw(game);
+        }
+    }
+
+    // передвигает хранимые объекты
+    public void move(int boost) {
+        for (RoadObject roadObject : items) {
+            roadObject.move(boost + roadObject.speed);
         }
     }
 }
