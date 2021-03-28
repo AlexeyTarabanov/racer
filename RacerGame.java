@@ -81,14 +81,21 @@ public class RacerGame extends Game {
 
     // перемещает все подвижные игровые объекты
     private void moveAll() {
+        // "запускаем" дорожную разметку со скоростью игрока
         roadMarking.move(player.speed);
+        // "запускаем" машину игрока
         player.move();
+        // "запускаем" препятсвия на дороге
+        roadManager.move(player.speed);
     }
 
     // все, что будет происходить на каждом шаге, выполняется в этом методе
     @Override
     public void onTurn(int step) {
         moveAll();
+        // генерируем препятствия
+        roadManager.generateNewRoadObjects(this);
+        // рисуем объекты
         drawScene();
     }
 

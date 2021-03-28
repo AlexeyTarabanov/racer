@@ -59,4 +59,29 @@ public class RoadManager {
             roadObject.move(boost + roadObject.speed);
         }
     }
+
+    // проверяет существует ли Thorn
+    private boolean isThornExists() {
+        for (RoadObject roadObject : items) {
+            if (roadObject.type == RoadObjectType.THORN) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // проверяет, есть ли на дороге шипы,
+    // если их нет — генерирует новые с вероятностью 10%.
+    private void generateThorn(Game game) {
+        int value = game.getRandomNumber(100);
+        if (value < 10 && !isThornExists()) {
+            addRoadObject(RoadObjectType.THORN, game);
+        }
+    }
+
+    // генерирует новые препятствия
+    public void generateNewRoadObjects(Game game) {
+        // создаем шипы
+        generateThorn(game);
+    }
 }
