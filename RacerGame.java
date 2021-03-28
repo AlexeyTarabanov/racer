@@ -24,6 +24,8 @@ public class RacerGame extends Game {
     private PlayerCar player;
     // препятствия на дороге
     private RoadManager roadManager;
+    // хранит текущее состояние игры
+    private boolean isGameStopped;
 
     // установка начального состояния игры (точка входа)
     @Override
@@ -41,6 +43,7 @@ public class RacerGame extends Game {
         roadMarking = new RoadMarking();
         player = new PlayerCar();
         roadManager = new RoadManager();
+        isGameStopped = false;
         drawScene();
         setTurnTimer(40);
     }
@@ -92,11 +95,17 @@ public class RacerGame extends Game {
     // все, что будет происходить на каждом шаге, выполняется в этом методе
     @Override
     public void onTurn(int step) {
-        moveAll();
-        // генерируем препятствия
-        roadManager.generateNewRoadObjects(this);
-        // рисуем объекты
-        drawScene();
+        // проверяем пересечение игрока с препятствиями
+        if (roadManager.checkCrush(player)) {
+            gameOver();
+            drawScene();
+        } else {
+            moveAll();
+            // генерируем препятствия
+            roadManager.generateNewRoadObjects(this);
+            // рисуем объекты
+            drawScene();
+        }
     }
 
     // обрабатывает нажатие клавиш
@@ -119,6 +128,17 @@ public class RacerGame extends Game {
         if (key == Key.LEFT && player.getDirection() == Direction.LEFT) {
             player.setDirection(Direction.NONE);
         }
+    }
+
+    // все действия, которые осуществляются при проигрыше
+    private void gameOver() {
+        isGameStopped = true;
+        // выводим сообщение на экран
+        showMessageDialog(Color.BLACK, "Game Over", Color.RED, 75);
+        // останавливаем таймер
+        stopTurnTimer();
+        // изображение взрыва
+        player.stop();
     }
 }
 

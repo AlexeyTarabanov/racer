@@ -3,11 +3,20 @@ package com.javarush.games.racer;
 import com.javarush.engine.cell.Color;
 import com.javarush.engine.cell.Game;
 
+/**
+ * Будет представлять игровые объекты.
+ */
 public class GameObject {
+    // координаты верхнего левого угла объекта на игровом поле
+    // координаты положения на игровом поле
     public int x;
     public int y;
+    // высота и ширина
+    // габаритные размеры объекта
     public int width;
     public int height;
+    // матрица отображения игрового объекта
+    // значения матрицы — порядковые номера цветов в Color
     public int[][] matrix;
 
     public GameObject(int x, int y) {
@@ -23,9 +32,11 @@ public class GameObject {
         height = matrix.length;
     }
 
+    // рисует объект
     public void draw(Game game) {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
+                // цвет
                 int colorIndex = matrix[j][i];
                 game.setCellColor(x + i, y + j, Color.values()[colorIndex]);
             }
