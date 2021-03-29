@@ -99,13 +99,13 @@ public class RacerGame extends Game {
         if (roadManager.checkCrush(player)) {
             gameOver();
             drawScene();
-        } else {
-            moveAll();
-            // генерируем препятствия
-            roadManager.generateNewRoadObjects(this);
-            // рисуем объекты
-            drawScene();
+            return;
         }
+        moveAll();
+        // генерируем препятствия
+        roadManager.generateNewRoadObjects(this);
+        // рисуем объекты
+        drawScene();
     }
 
     // обрабатывает нажатие клавиш
@@ -113,19 +113,25 @@ public class RacerGame extends Game {
     public void onKeyPress(Key key) {
         if (key == Key.RIGHT) {
             player.setDirection(Direction.RIGHT);
-        }
-        if (key == Key.LEFT) {
+        } else if (key == Key.LEFT) {
             player.setDirection(Direction.LEFT);
+        } else if (key == Key.SPACE && isGameStopped) {
+            // перезапуск игры
+            createGame();
+        } else if (key == Key.UP) {
+            // увеличивает скорость
+            player.speed = 2;
         }
     }
 
     // поведение машины при отпускании клавиш
     @Override
     public void onKeyReleased(Key key) {
-        if (key == Key.RIGHT && player.getDirection() == Direction.RIGHT) {
-            player.setDirection(Direction.NONE);
-        }
-        if (key == Key.LEFT && player.getDirection() == Direction.LEFT) {
+        // возвращает скорости начальное значение
+        if (key == Key.UP) {
+            player.speed = 1;
+        } else if ((key == Key.RIGHT && player.getDirection() == Direction.RIGHT)
+                || (key == Key.LEFT && player.getDirection() == Direction.LEFT)) {
             player.setDirection(Direction.NONE);
         }
     }
