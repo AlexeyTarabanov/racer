@@ -22,6 +22,8 @@ public class RoadManager {
     private static final int FOURTH_LANE_POSITION = 44;
     // список всех текущих объектов-препятствий
     private List<RoadObject> items = new ArrayList<>();
+    // габариты машины с запасом (дистанцией)
+    private static final int PLAYER_CAR_DISTANCE = 12;
 
 
     // создание объектов-препятствий
@@ -42,7 +44,9 @@ public class RoadManager {
         // создает объект-препятствие
         RoadObject roadObject = createRoadObject(type, x, y);
         // добавляет в список текущих объектов-препятствий
-        items.add(roadObject);
+        if (isRoadSpaceFree(roadObject)) {
+            items.add(roadObject);
+        }
     }
 
     // отрисовка препятствий
@@ -115,5 +119,16 @@ public class RoadManager {
             int carTypeNumber = game.getRandomNumber(4);
             addRoadObject(RoadObjectType.values()[carTypeNumber], game);
         }
+    }
+
+    // будет проверять, есть ли достаточно свободного места на дороге для размещения новой машины
+    private boolean isRoadSpaceFree(RoadObject object) {
+        for (RoadObject item : items) {
+            // возвращает false, если расстояние между объектами по горизонтали и вертикали больше переданной дистанции
+            if (item.isCollisionWithDistance(object, PLAYER_CAR_DISTANCE)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
