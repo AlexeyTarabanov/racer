@@ -29,7 +29,7 @@ public class RoadManager {
         if (type == RoadObjectType.THORN) {
             return new Thorn(x, y);
         }
-        return null;
+        return new Car(type, x, y);
     }
 
     // генерирует позицию нового препятствия и добавляет его в список всех объектов-препятствий
@@ -42,9 +42,7 @@ public class RoadManager {
         // создает объект-препятствие
         RoadObject roadObject = createRoadObject(type, x, y);
         // добавляет в список текущих объектов-препятствий
-        if (roadObject != null) {
-            items.add(roadObject);
-        }
+        items.add(roadObject);
     }
 
     // отрисовка препятствий
@@ -77,8 +75,8 @@ public class RoadManager {
     // проверяет, есть ли на дороге шипы,
     // если их нет — генерирует новые с вероятностью 10%.
     private void generateThorn(Game game) {
-        int value = game.getRandomNumber(100);
-        if (value < 10 && !isThornExists()) {
+        int randomNumber = game.getRandomNumber(100);
+        if (randomNumber < 10 && !isThornExists()) {
             addRoadObject(RoadObjectType.THORN, game);
         }
     }
@@ -87,6 +85,8 @@ public class RoadManager {
     public void generateNewRoadObjects(Game game) {
         // создаем шипы
         generateThorn(game);
+        // создаем новые машины
+        generateRegularCar(game);
     }
 
     // удаляет вставленные элементы, если они вышли за края игрового поля
@@ -105,5 +105,15 @@ public class RoadManager {
             }
         }
         return false;
+    }
+
+    // генерация новых машин
+    private void generateRegularCar(Game game) {
+        // новые машины будут создаваться с вероятностью в 30%
+        if (game.getRandomNumber(100) < 30) {
+            // тип машины будет случайно выбран из первых четырех элементов RoadObjectType
+            int carTypeNumber = game.getRandomNumber(4);
+            addRoadObject(RoadObjectType.values()[carTypeNumber], game);
+        }
     }
 }
