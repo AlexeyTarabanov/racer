@@ -30,6 +30,8 @@ public class RoadManager {
     private RoadObject createRoadObject(RoadObjectType type, int x, int y) {
         if (type == RoadObjectType.THORN) {
             return new Thorn(x, y);
+        } else if (type == RoadObjectType.DRUNK_CAR) {
+            return new MovingCar(x, y);
         }
         return new Car(type, x, y);
     }
@@ -59,7 +61,7 @@ public class RoadManager {
     // передвигает хранимые объекты
     public void move(int boost) {
         for (RoadObject roadObject : items) {
-            roadObject.move(boost + roadObject.speed);
+            roadObject.move(boost + roadObject.speed, items);
         }
         // Чтобы генерировались новые шипы,
         // старые нужно удалять из списка items после того, как они вышли за пределы экрана.
@@ -91,6 +93,8 @@ public class RoadManager {
         generateThorn(game);
         // создаем новые машины
         generateRegularCar(game);
+        // создаем "пьяные" машины
+        generateMovingCar(game);
     }
 
     // удаляет вставленные элементы, если они вышли за края игрового поля
@@ -121,6 +125,13 @@ public class RoadManager {
         }
     }
 
+    // генерация "пьяных" машин
+    private void generateMovingCar(Game game) {
+        if (game.getRandomNumber(100) < 10 && !isMovingCarExists()) {
+            addRoadObject(RoadObjectType.DRUNK_CAR, game);
+        }
+    }
+
     // будет проверять, есть ли достаточно свободного места на дороге для размещения новой машины
     private boolean isRoadSpaceFree(RoadObject object) {
         for (RoadObject item : items) {
@@ -130,5 +141,15 @@ public class RoadManager {
             }
         }
         return true;
+    }
+
+    // проверяет, существует ли на трассе "пьяная" машина
+    private boolean isMovingCarExists() {
+        for (RoadObject item : items) {
+            if (item instanceof MovingCar) {
+                return true;
+            }
+        }
+        return false;
     }
 }
