@@ -28,6 +28,8 @@ public class RacerGame extends Game {
     private RoadManager roadManager;
     // финишная прямая
     private FinishLine finishLine;
+    // панель прогресса в прохождении игры
+    private ProgressBar progressBar;
     // хранит текущее состояние игры
     private boolean isGameStopped;
 
@@ -49,6 +51,7 @@ public class RacerGame extends Game {
         roadManager = new RoadManager();
         isGameStopped = false;
         finishLine = new FinishLine();
+        progressBar = new ProgressBar(RACE_GOAL_CARS_COUNT);
         drawScene();
         setTurnTimer(40);
     }
@@ -60,6 +63,7 @@ public class RacerGame extends Game {
         player.draw(this);
         roadManager.draw(this);
         finishLine.draw(this);
+        progressBar.draw(this);
     }
 
     // отрисовка фона игрового поля
@@ -98,6 +102,8 @@ public class RacerGame extends Game {
         roadManager.move(player.speed);
         // "запускаем" финишную линию
         finishLine.move(player.speed);
+        // "запускаем" линию прогресса
+        progressBar.move(roadManager.getPassedCarsCount());
     }
 
     // все, что будет происходить на каждом шаге, выполняется в этом методе
