@@ -115,6 +115,11 @@ public class RacerGame extends Game {
             drawScene();
             return;
         }
+        if (finishLine.isCrossed(player)) {
+            win();
+            drawScene();
+            return;
+        }
         // вызываем финишную черту
         if (roadManager.getPassedCarsCount() >= RACE_GOAL_CARS_COUNT) {
             finishLine.show();
@@ -163,6 +168,12 @@ public class RacerGame extends Game {
         stopTurnTimer();
         // изображение взрыва
         player.stop();
+    }
+
+    private void win() {
+        isGameStopped = true;
+        showMessageDialog(Color.BLACK, "Ты выиграл!", Color.GREEN, 75);
+        stopTurnTimer();
     }
 }
 

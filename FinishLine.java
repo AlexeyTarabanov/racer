@@ -25,4 +25,15 @@ public class FinishLine extends GameObject {
             y += boost;
         }
     }
+
+    // проверки пересечения игроком финишной линии
+    public boolean isCrossed(PlayerCar playerCar) {
+
+        // если y игрока меньше y финишной линии, значит линия пересечена.
+        if (playerCar.y < this.y) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
