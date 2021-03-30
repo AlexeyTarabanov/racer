@@ -109,6 +109,10 @@ public class RacerGame extends Game {
             drawScene();
             return;
         }
+        // вызываем финишную черту
+        if (roadManager.getPassedCarsCount() >= RACE_GOAL_CARS_COUNT) {
+            finishLine.show();
+        }
         moveAll();
         // генерируем препятствия
         roadManager.generateNewRoadObjects(this);

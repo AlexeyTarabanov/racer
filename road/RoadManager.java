@@ -5,6 +5,7 @@ import com.javarush.games.racer.PlayerCar;
 import com.javarush.games.racer.RacerGame;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -24,6 +25,8 @@ public class RoadManager {
     private List<RoadObject> items = new ArrayList<>();
     // габариты машины с запасом (дистанцией)
     private static final int PLAYER_CAR_DISTANCE = 12;
+    // количество машин, с которыми разминулся игрок
+    private int passedCarsCount = 0;
 
 
     // создание объектов-препятствий
@@ -34,6 +37,10 @@ public class RoadManager {
             return new MovingCar(x, y);
         }
         return new Car(type, x, y);
+    }
+
+    public int getPassedCarsCount() {
+        return passedCarsCount;
     }
 
     // генерирует позицию нового препятствия и добавляет его в список всех объектов-препятствий
@@ -101,7 +108,18 @@ public class RoadManager {
     // (за пределы экрана)
     private void deletePassedItems() {
         // удаляем если у объекта-препятствия координата y больше либо равна RacerGame.HEIGHT
-        items.removeIf(item -> item.y >= RacerGame.HEIGHT);
+//        items.removeIf(item -> item.y >= RacerGame.HEIGHT);
+
+        Iterator<RoadObject> itemIterator = items.iterator();
+        while (itemIterator.hasNext()) {
+            RoadObject item = itemIterator.next();
+            if (item.y >= RacerGame.HEIGHT) {
+                itemIterator.remove();
+                if (item.type != RoadObjectType.THORN) {
+                    passedCarsCount++;
+                }
+            }
+        }
     }
 
     // проверяет, произошла ли авария
