@@ -2,10 +2,6 @@ package com.javarush.games.racer.road;
 
 import java.util.List;
 
-/**
- * Машина с "пьяным" водителем.
- * Водитель будет двигаться и по горизонтали.
- */
 public class MovingCar extends RoadObject {
     private int dx = 0;
 
