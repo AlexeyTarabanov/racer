@@ -18,12 +18,16 @@ public class RacerGame extends Game {
     public static final int CENTER_X = WIDTH / 2;
     // обочина
     public static final int ROADSIDE_WIDTH = 14;
+    // количество машин препятствий
+    private static final int RACE_GOAL_CARS_COUNT = 40;
     // дорожная разметка
     private RoadMarking roadMarking;
     // машина игрока
     private PlayerCar player;
     // препятствия на дороге
     private RoadManager roadManager;
+    // финишная прямая
+    private FinishLine finishLine;
     // хранит текущее состояние игры
     private boolean isGameStopped;
 
@@ -44,6 +48,7 @@ public class RacerGame extends Game {
         player = new PlayerCar();
         roadManager = new RoadManager();
         isGameStopped = false;
+        finishLine = new FinishLine();
         drawScene();
         setTurnTimer(40);
     }
@@ -54,6 +59,7 @@ public class RacerGame extends Game {
         roadMarking.draw(this);
         player.draw(this);
         roadManager.draw(this);
+        finishLine.draw(this);
     }
 
     // отрисовка фона игрового поля
@@ -90,6 +96,8 @@ public class RacerGame extends Game {
         player.move();
         // "запускаем" препятсвия на дороге
         roadManager.move(player.speed);
+        // "запускаем" финишную линию
+        finishLine.move(player.speed);
     }
 
     // все, что будет происходить на каждом шаге, выполняется в этом методе
