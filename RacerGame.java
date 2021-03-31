@@ -30,6 +30,8 @@ public class RacerGame extends Game {
     private FinishLine finishLine;
     // панель прогресса в прохождении игры
     private ProgressBar progressBar;
+    // счет игры
+    private int score;
     // хранит текущее состояние игры
     private boolean isGameStopped;
 
@@ -52,6 +54,7 @@ public class RacerGame extends Game {
         isGameStopped = false;
         finishLine = new FinishLine();
         progressBar = new ProgressBar(RACE_GOAL_CARS_COUNT);
+        score = 3500;
         drawScene();
         setTurnTimer(40);
     }
@@ -124,6 +127,8 @@ public class RacerGame extends Game {
         if (roadManager.getPassedCarsCount() >= RACE_GOAL_CARS_COUNT) {
             finishLine.show();
         }
+        // на каждом такте игры (40мс) количество очков уменьшается на 5, пока игрок не финиширует
+        setScore(score -= 5);
         moveAll();
         // генерируем препятствия
         roadManager.generateNewRoadObjects(this);
